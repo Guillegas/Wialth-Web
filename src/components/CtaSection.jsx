@@ -6,12 +6,14 @@ export default function CtaSection() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError]     = useState('')
+  const [cooldown, setCooldown] = useState(false)
   const [hRef, hVisible]      = useScrollReveal()
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (cooldown) return
     const trimmed = email.trim()
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmed)) {
       setError('Por favor, introduce un email válido.')
       return
     }
@@ -20,11 +22,18 @@ export default function CtaSection() {
       const res  = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: trimmed }),
+        body: JSON.stringify({ email: trimmed, website: '' }),
       })
       const data = await res.json().catch(() => ({}))
-      if (res.ok) { setSuccess(true); setEmail('') }
-      else setError(data.message || 'Algo salió mal. Inténtalo de nuevo.')
+      if (res.ok) {
+        setSuccess(true); setEmail('')
+        setCooldown(true)
+        setTimeout(() => setCooldown(false), 60_000)
+      } else if (res.status === 429) {
+        setError('Demasiados intentos. Espera un momento.')
+      } else {
+        setError(data.message || 'Algo salió mal. Inténtalo de nuevo.')
+      }
     } catch {
       setError('Error de conexión. Comprueba tu red.')
     } finally {
@@ -98,6 +107,9 @@ export default function CtaSection() {
             aria-label="Formulario CTA"
             className={`reveal d4 ${hVisible ? 'active' : ''} flex flex-col sm:flex-row gap-2.5 max-w-[460px] mx-auto`}
           >
+            {/* Honeypot — hidden from humans, bots fill it */}
+            <input type="text" name="website" tabIndex="-1" autoComplete="off"
+                   aria-hidden="true" style={{ display: 'none' }} />
             <div className="inp-wrap flex-1">
               <input
                 type="email"
