@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Custom CSS properties ── */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ── Base reset ── */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 300;
+    background-color: #3d5239;
+    color: #3d5239;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  * { box-sizing: border-box; }
+}
+
+/* ── Scroll-reveal utility ── */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.22,1,.36,1),
+                transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.active { opacity: 1; transform: none; }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(.93);
+    transition: opacity .65s cubic-bezier(.22,1,.36,1),
+                transform .65s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal-scale.active { opacity: 1; transform: none; }
+
+  .d1 { transition-delay: .06s; }
+  .d2 { transition-delay: .14s; }
+  .d3 { transition-delay: .22s; }
+  .d4 { transition-delay: .30s; }
+  .d5 { transition-delay: .38s; }
+  .d6 { transition-delay: .46s; }
+}
+
+/* ── Conic rotating border on input focus ── */
+.inp-wrap { position: relative; }
+.inp-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 13.5px;
+  background: conic-gradient(from var(--angle), #91A08D, #E1A594, #E9E4D4, #91A08D);
+  opacity: 0;
+  transition: opacity .35s;
+  z-index: 0;
+}
+.inp-wrap:focus-within::before {
+  opacity: 1;
+  animation: spin-conic 3s linear infinite;
+}
+@keyframes spin-conic { to { --angle: 360deg; } }
+
+/* ── Countdown flip animation ── */
+@keyframes num-flip {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  30%  { transform: translateY(-6px) scale(.82); opacity: 0; }
+  31%  { transform: translateY(6px) scale(.82); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.cd-flip { animation: num-flip .42s cubic-bezier(.22,1,.36,1) forwards; }
+
+/* ── Number counter flip ── */
+@keyframes count-flip {
+  from { transform: translateY(6px) scale(.9); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+.count-flip { animation: count-flip .35s cubic-bezier(.22,1,.36,1) forwards; }
+
+/* ── Progress bar gradient ── */
+.pbar-gradient {
+  background: linear-gradient(90deg, #91A08D, #E1A594);
+}
+
+/* ── Hero gradient ── */
+.hero-gradient {
+  background:
+    linear-gradient(to bottom, transparent 55%, rgba(242,241,237,.18) 72%, rgba(242,241,237,.60) 84%, #F2F1ED 100%),
+    linear-gradient(160deg, #3d5239 0%, #4a6645 25%, #587554 55%, #7a9475 80%, #91A08D 100%);
+}
+
+/* ── CTA section gradient ── */
+.cta-gradient {
+  background: transparent;
+}
+
+/* ── Testimonials scroll snap ── */
+.snap-x-scroll {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.snap-start-item { scroll-snap-align: start; }
+
+/* ── Ticker pause on hover ── */
+.ticker-track { display: flex; will-change: transform; }
+.ticker-track:hover { animation-play-state: paused; }
+
+/* ── Phone mockup screen gradient ── */
+.phone-screen-bg {
+  background: #F4EFE4;
+}
+
+/* ── Shimmer loading effect ── */
+.shimmer-bg {
+  background: linear-gradient(90deg,
+    rgba(145,160,141,.05) 0%,
+    rgba(233,228,212,.15) 50%,
+    rgba(145,160,141,.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ── Section label line ── */
+.sec-label-line::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: #A3A99D;
+  opacity: .5;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* ── FAQ accordion ── */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s cubic-bezier(.22,1,.36,1), opacity .3s;
+  opacity: 0;
+}
+.faq-answer.open {
+  max-height: 200px;
+  opacity: 1;
+}
+
+/* ── Chat typing dots ── */
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0);    opacity: .4; }
+  30%            { transform: translateY(-3px); opacity: 1;  }
+}
+
+/* ── Scroll arrow bounce ── */
+@keyframes scrollArrow {
+  0%, 100% { transform: translateY(0);   opacity: 1;   }
+  50%       { transform: translateY(6px); opacity: 0.4; }
+}
+
+/* ── Sticky CTA safe area ── */
+.sticky-cta {
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+}
+
+/* ── Blob dot grid texture ── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(233,228,212,.08) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 25%, rgba(0,0,0,.55) 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 25%, rgba(0,0,0,.55) 75%, transparent 100%);
+}
+
+/* ── Spin utility (EA badge ring) ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Legal prose styles ── */
+.legal-prose ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+  space-y: 0.4rem;
+}
+.legal-prose ul li {
+  margin-bottom: 0.35rem;
+}
+.legal-prose a {
+  color: #3d5239;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+.legal-prose a:hover {
+  opacity: 1;
+}
+
+/* ── Card tilt 3D effect on hover (desktop) ── */
+@media (hover: hover) {
+  .card-3d {
+    transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card-3d:hover {
+    transform: translateY(-4px) perspective(600px) rotateX(2deg);
+  }
+}
