@@ -1,4 +1,6 @@
 import { useRef } from 'react'
+import { Analytics }    from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import Nav            from './components/Nav.jsx'
 import Hero           from './components/Hero.jsx'
 import Benefits       from './components/Benefits.jsx'
@@ -31,6 +33,8 @@ export default function App() {
 
       <Footer />
       <StickyCta heroRef={heroRef} />
+      <Analytics />
+      <SpeedInsights />
     </>
   )
 }
