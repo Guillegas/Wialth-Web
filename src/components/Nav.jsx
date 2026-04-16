@@ -40,14 +40,15 @@ export default function Nav({ heroRef }) {
     <nav
       aria-label="Navegación principal"
       className="sticky top-0 z-[200] h-[62px] flex items-center justify-between px-5 bg-transparent border-b border-transparent"
+      style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
     >
       {/* Logo */}
       <a href="#" aria-label="Wialth inicio" className="flex items-center">
         <img
           src={isDark ? '/logo-crema.png' : '/logo-verde.png'}
           alt="Wialth"
-          className="h-[34px] w-auto transition-opacity duration-300"
-          onError={e => { e.target.style.display = 'none' }}
+          className="h-[34px] w-auto"
+          loading="eager"
         />
       </a>
 
