@@ -240,7 +240,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
               </form>
             )}
             {/* Trust line — justo debajo del input */}
-            {!success && (
+            {!subscribed && (
               <div className="flex items-center gap-2 mt-2.5 px-1">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
