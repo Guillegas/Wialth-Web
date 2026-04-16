@@ -8,6 +8,8 @@
  *   BREVO_LIST_ID   — numeric ID of the Brevo contact list (default: 3)
  */
 
+import { promises as dns } from 'dns'
+
 // ── In-memory rate limiter (per serverless instance) ──────────────────────────
 // Limits each IP to MAX_REQUESTS attempts within WINDOW_MS.
 // Note: resets on cold starts — sufficient for landing page abuse prevention.
@@ -33,17 +35,62 @@ function isRateLimited(ip) {
 
 // ── Disposable / throwaway email domains blocklist ────────────────────────────
 const BLOCKED_DOMAINS = new Set([
-  'mailinator.com', 'guerrillamail.com', 'tempmail.com', 'throwam.com',
-  'sharklasers.com', 'guerrillamailblock.com', 'grr.la', 'guerrillamail.info',
-  'spam4.me', 'trashmail.com', 'yopmail.com', 'dispostable.com',
-  'maildrop.cc', 'fakeinbox.com', 'getairmail.com', 'filzmail.com',
-  'discard.email', 'spamgourmet.com', 'trashmail.me', 'trashmail.at',
-  'tempr.email', 'dispostable.com', 'mailnull.com', 'spamspot.com',
+  // Guerrilla Mail family
+  'guerrillamail.com', 'guerrillamail.net', 'guerrillamail.org',
+  'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.info',
+  'guerrillamailblock.com', 'sharklasers.com', 'grr.la', 'spam4.me',
+  // Mailinator family
+  'mailinator.com', 'mailinator2.com', 'tradermail.info', 'mailinater.com',
+  // Yopmail
+  'yopmail.com', 'yopmail.fr', 'cool.fr.nf', 'jetable.fr.nf',
+  'nospam.ze.tc', 'nomail.xl.cx', 'mega.zik.dj', 'speed.1s.fr',
+  // Trashmail
+  'trashmail.com', 'trashmail.me', 'trashmail.at', 'trashmail.io',
+  'trashmail.net', 'trashmail.org', 'trashmail.xyz',
+  // Temp/throwaway
+  'tempmail.com', 'temp-mail.org', 'tempmail.net', 'tempmail.io',
+  'throwam.com', 'throwaway.email', 'dispostable.com', 'maildrop.cc',
+  'fakeinbox.com', 'getairmail.com', 'filzmail.com', 'discard.email',
+  'spamgourmet.com', 'mailnull.com', 'spamspot.com', 'tempr.email',
+  // 10 minute mail
+  '10minutemail.com', '10minutemail.net', '10minutemail.org',
+  '10minutemail.co.uk', '10minutemail.de', '10minemail.com',
+  // Others
+  'mailnesia.com', 'mailnull.com', 'spamfree24.org', 'spamgob.com',
+  'spamhere.org', 'spamhole.com', 'spamify.com', 'spamthis.co.uk',
+  'spoofmail.de', 'super-auswahl.de', 'suremail.info', 'sweetxxx.de',
+  'tafmail.com', 'tagyourself.com', 'teewars.org', 'telefonica.net',
+  'teleworm.com', 'teleworm.us', 'tempalias.com', 'tempinbox.com',
+  'tempinbox.co.uk', 'tempmail.it', 'tempmail2.com', 'tempmailer.com',
+  'tempmailer.de', 'tempomail.fr', 'temporarily.de', 'temporarioemail.com.br',
+  'temporaryemail.net', 'temporaryemail.us', 'temporaryforwarding.com',
+  'temporaryinbox.com', 'temporarymailaddress.com', 'thanksnospam.info',
+  'thankyou2010.com', 'thisisnotmyrealemail.com', 'throwam.com',
+  'tilien.com', 'tittbit.in', 'tmail.com', 'tmailinator.com',
+  'toiea.com', 'tradermail.info', 'trash-amil.com', 'trash-mail.at',
+  'trash-mail.com', 'trash-mail.de', 'trash-mail.ga', 'trash-mail.io',
+  'trash2009.com', 'trashemail.de', 'trashimail.com', 'trashmail.fr',
+  'trashmail.me', 'trashmail.sx', 'trashmail.tk', 'trashmailer.com',
+  'trashmailer.org', 'trashymails.com', 'trbvm.com', 'turual.com',
+  'twinmail.de', 'tyldd.com', 'uggsrock.com', 'umail.net',
+  'upliftnow.com', 'uplipht.com', 'uroid.com', 'us.af',
 ])
 
 function isDisposableEmail(email) {
   const domain = email.split('@')[1]?.toLowerCase()
   return domain ? BLOCKED_DOMAINS.has(domain) : false
+}
+
+// ── MX record check — verifies the domain can actually receive email ──────────
+async function domainHasMx(email) {
+  const domain = email.split('@')[1]?.toLowerCase()
+  if (!domain) return false
+  try {
+    const records = await dns.resolveMx(domain)
+    return Array.isArray(records) && records.length > 0
+  } catch {
+    return false
+  }
 }
 
 // ── Allowed origins ───────────────────────────────────────────────────────────
@@ -109,6 +156,12 @@ export default async function handler(req, res) {
   // Block disposable email domains
   if (isDisposableEmail(cleanEmail)) {
     return res.status(400).json({ message: 'Por favor, usa un email real.' })
+  }
+
+  // MX record check — domain must have real mail servers
+  const mxValid = await domainHasMx(cleanEmail)
+  if (!mxValid) {
+    return res.status(400).json({ message: 'El dominio del email no es válido. Comprueba que está bien escrito.' })
   }
 
   // Check env vars
