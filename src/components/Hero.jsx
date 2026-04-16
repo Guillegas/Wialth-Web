@@ -200,7 +200,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
             ) : (
               <form id="hero-form" onSubmit={handleSubmit} noValidate
                     aria-label="Formulario lista de espera"
-                    className="flex flex-col sm:flex-row gap-2.5">
+                    className="flex flex-col gap-2.5">
                 {/* Honeypot — hidden from humans, bots fill it */}
                 <input type="text" name="website" tabIndex="-1" autoComplete="off"
                        aria-hidden="true" style={{ display: 'none' }} />
@@ -230,7 +230,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
                              shadow-[0_4px_20px_rgba(225,165,148,.38)]
                              hover:bg-salmon-dk hover:shadow-[0_6px_26px_rgba(225,165,148,.48)]
                              active:scale-[.975] disabled:opacity-65 disabled:pointer-events-none
-                             transition-all duration-200 sm:w-auto w-full"
+                             transition-all duration-200 w-full"
                   style={{ WebkitAppearance: 'none' }}
                 >
                   <span className="relative z-[1]">{loading ? 'Uniéndome…' : 'Unirme como Early Adopter →'}</span>

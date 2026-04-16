@@ -104,7 +104,7 @@ export default function CtaSection({ subscribed, onSuccess }) {
             onSubmit={handleSubmit}
             noValidate
             aria-label="Formulario CTA"
-            className={`reveal d4 ${hVisible ? 'active' : ''} flex flex-col sm:flex-row gap-2.5 max-w-[460px] mx-auto`}
+            className={`reveal d4 ${hVisible ? 'active' : ''} flex flex-col gap-2.5 max-w-[460px] mx-auto`}
           >
             {/* Honeypot — hidden from humans, bots fill it */}
             <input type="text" name="website" tabIndex="-1" autoComplete="off"
@@ -134,7 +134,7 @@ export default function CtaSection({ subscribed, onSuccess }) {
                          shadow-[0_4px_20px_rgba(26,40,24,.38)]
                          hover:bg-[#2a3a27] active:scale-[.975]
                          disabled:opacity-65 disabled:pointer-events-none
-                         transition-all duration-200 sm:w-auto w-full relative overflow-hidden"
+                         transition-all duration-200 w-full relative overflow-hidden"
               style={{ WebkitAppearance: 'none' }}
             >
               <span className="relative z-[1]">{loading ? 'Uniéndome…' : 'Unirme como Early Adopter →'}</span>
