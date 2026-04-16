@@ -394,7 +394,7 @@ export default function Hero({ heroRef }) {
       </div>
 
       {/* ── Mobile: two phones ── */}
-      <div className="lg:hidden flex flex-col items-center relative z-10 overflow-x-clip w-full">
+      <div className="lg:hidden flex flex-col items-center relative z-10 w-full" style={{ paddingBottom: 100 }}>
 
         {/* Logo + frase encima de los móviles (mobile) */}
         <div className={`${r('d4')} flex flex-col items-center gap-2.5 mb-5 px-4`}>
@@ -431,6 +431,7 @@ export default function Hero({ heroRef }) {
           </div>
         </div>
       </div>
+
 
     </section>
   )
