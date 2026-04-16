@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal.js'
 
-export default function CtaSection() {
+export default function CtaSection({ subscribed, onSuccess }) {
   const [email, setEmail]     = useState('')
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
   const [error, setError]     = useState('')
   const [cooldown, setCooldown] = useState(false)
   const [hRef, hVisible]      = useScrollReveal()
@@ -26,7 +25,7 @@ export default function CtaSection() {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) {
-        setSuccess(true); setEmail('')
+        onSuccess(); setEmail('')
         setCooldown(true)
         setTimeout(() => setCooldown(false), 60_000)
       } else if (res.status === 429) {
@@ -86,7 +85,7 @@ export default function CtaSection() {
         </p>
 
         {/* Form */}
-        {success ? (
+        {subscribed ? (
           <div className={`reveal ${hVisible ? 'active' : ''} flex flex-col items-center gap-4 py-4`}>
             <div className="w-16 h-16 rounded-full bg-cream/10 border border-cream/20 flex items-center justify-center">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E9E4D4"
@@ -96,7 +95,7 @@ export default function CtaSection() {
             </div>
             <p className="font-h2 font-semibold text-cream text-[1.1rem]">¡Ya eres Early Adopter!</p>
             <p className="font-body font-light text-cream/65 text-sm leading-relaxed max-w-[30ch]">
-              Tu badge exclusivo te espera en la app. Te avisamos cuando lancemos.
+              En menos de 1 minuto recibirás en tu correo la confirmación con tu badge exclusivo.
             </p>
           </div>
         ) : (

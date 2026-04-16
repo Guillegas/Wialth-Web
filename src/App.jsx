@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Analytics }    from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import Nav            from './components/Nav.jsx'
@@ -12,12 +12,13 @@ import Footer         from './components/Footer.jsx'
 import StickyCta      from './components/StickyCta.jsx'
 
 export default function App() {
-  const heroRef = useRef(null)
+  const heroRef    = useRef(null)
+  const [subscribed, setSubscribed] = useState(false)
 
   return (
     <>
       <Nav heroRef={heroRef} />
-      <Hero heroRef={heroRef} />
+      <Hero heroRef={heroRef} subscribed={subscribed} onSuccess={() => setSubscribed(true)} />
       <Benefits />
       <HowItWorks />
 
@@ -28,7 +29,7 @@ export default function App() {
       {/* Wrapper con gradiente continuo: FAQ → CTA */}
       <div style={{ background: 'linear-gradient(to bottom, #F2F1ED 0%, #e2e6df 10%, #cdd4c9 20%, #b3bcae 30%, #96a691 40%, #7a9376 52%, #607a5b 65%, #4a6244 77%, #3d5239 88%, #2e3f2b 100%)' }}>
         <Faq />
-        <CtaSection />
+        <CtaSection subscribed={subscribed} onSuccess={() => setSubscribed(true)} />
       </div>
 
       <Footer />

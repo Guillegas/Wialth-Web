@@ -39,10 +39,9 @@ function CountdownUnit({ value, label, id, variant = 'cream' }) {
   )
 }
 
-export default function Hero({ heroRef }) {
+export default function Hero({ heroRef, subscribed, onSuccess }) {
   const [email, setEmail]     = useState('')
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
   const [error, setError]     = useState('')
   const [ready, setReady]     = useState(false)
   const [cooldown, setCooldown] = useState(false)
@@ -70,7 +69,7 @@ export default function Hero({ heroRef }) {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) {
-        setSuccess(true); setEmail('')
+        onSuccess(); setEmail('')
         setCooldown(true)
         setTimeout(() => setCooldown(false), 60_000)
       } else if (res.status === 429) {
@@ -185,7 +184,7 @@ export default function Hero({ heroRef }) {
           {/* Glassmorphism form card */}
           <div className={`${r('d5')} bg-sage/[.09] backdrop-blur-[22px] border border-sage/20
                            rounded-[20px] p-4 max-w-[490px] mb-6`}>
-            {success ? (
+            {subscribed ? (
               <div className="flex flex-col items-center text-center py-4 gap-3">
                 <div className="w-14 h-14 rounded-full bg-sage/20 border border-sage/30 flex items-center justify-center">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E9E4D4"
@@ -195,7 +194,7 @@ export default function Hero({ heroRef }) {
                 </div>
                 <p className="font-h2 font-semibold text-cream text-[1rem]">¡Ya eres Early Adopter!</p>
                 <p className="font-body font-light text-cream/70 text-sm leading-relaxed">
-                  Recibirás tu badge exclusivo cuando lancemos la app. Gracias por ser de los primeros.
+                  En menos de 1 minuto recibirás en tu correo la confirmación con tu badge exclusivo.
                 </p>
               </div>
             ) : (
