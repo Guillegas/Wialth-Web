@@ -291,7 +291,7 @@ export default function Hero({ heroRef }) {
           {/* Countdown — mobile: crema */}
           <div className={`${r('d6')} lg:hidden flex flex-wrap items-center gap-3`}
                aria-label="Cuenta atrás al lanzamiento">
-            <span className="font-body font-light text-[.72rem] tracking-[.1em] uppercase text-cream/72 whitespace-nowrap">
+            <span className="font-body font-light text-[.72rem] tracking-[.1em] uppercase text-cream whitespace-nowrap">
               Lanzamiento en
             </span>
             <div className="flex items-center gap-1.5 sm:gap-2" role="timer" aria-live="off">
