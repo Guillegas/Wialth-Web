@@ -93,10 +93,10 @@ export default function Hero({ heroRef }) {
       ref={heroRef}
       id="hero"
       aria-label="Sección principal"
-      className="relative lg:min-h-[100dvh] hero-gradient flex flex-col -mt-[64px]"
+      className="relative lg:min-h-[100dvh] hero-gradient flex flex-col -mt-[64px] overflow-x-hidden"
     >
       {/* ── Decorative layer — overflow-hidden solo aquí para contener blobs ── */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div aria-hidden="true" className="hero-blobs absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute will-change-transform rounded-full
           w-[min(90vw,560px)] h-[min(90vw,560px)]
           bg-[radial-gradient(ellipse,rgba(145,160,141,.48)_0%,transparent_66%)]
@@ -119,7 +119,7 @@ export default function Hero({ heroRef }) {
       </div>
 
       {/* ── Film grain ── */}
-      <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-[.04] pointer-events-none z-0">
+      <svg aria-hidden="true" className="grain-overlay absolute inset-0 w-full h-full opacity-[.04] pointer-events-none z-0">
         <defs>
           <filter id="grain">
             <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" stitchTiles="stitch" result="n"/>
@@ -394,7 +394,7 @@ export default function Hero({ heroRef }) {
       </div>
 
       {/* ── Mobile: two phones ── */}
-      <div className="lg:hidden flex flex-col items-center relative z-10">
+      <div className="lg:hidden flex flex-col items-center relative z-10 overflow-x-clip w-full">
 
         {/* Logo + frase encima de los móviles (mobile) */}
         <div className={`${r('d4')} flex flex-col items-center gap-2.5 mb-5 px-4`}>

@@ -24,7 +24,7 @@ export function useScrollReveal(options = {}) {
           observer.unobserve(el)
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -24px 0px', ...options },
+      { threshold: 0.05, rootMargin: '0px 0px 80px 0px', ...options },
     )
 
     observer.observe(el)

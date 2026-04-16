@@ -29,18 +29,20 @@
   .reveal {
     opacity: 0;
     transform: translateY(28px);
+    will-change: opacity, transform;
     transition: opacity .7s cubic-bezier(.22,1,.36,1),
                 transform .7s cubic-bezier(.22,1,.36,1);
   }
-  .reveal.active { opacity: 1; transform: none; }
+  .reveal.active { opacity: 1; transform: none; will-change: auto; }
 
   .reveal-scale {
     opacity: 0;
     transform: scale(.93);
+    will-change: opacity, transform;
     transition: opacity .65s cubic-bezier(.22,1,.36,1),
                 transform .65s cubic-bezier(.22,1,.36,1);
   }
-  .reveal-scale.active { opacity: 1; transform: none; }
+  .reveal-scale.active { opacity: 1; transform: none; will-change: auto; }
 
   .d1 { transition-delay: .06s; }
   .d2 { transition-delay: .14s; }
@@ -212,5 +214,57 @@
   }
   .card-3d:hover {
     transform: translateY(-4px) perspective(600px) rotateX(2deg);
+  }
+}
+
+/* ── Mobile: disable reveal animations to prevent blank sections ── */
+@media (max-width: 767px) {
+  .reveal,
+  .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* ── Mobile performance: reduce expensive GPU effects ── */
+@media (max-width: 1023px) {
+  /* Hide grain — feTurbulence filter is very expensive on mobile GPUs */
+  .grain-overlay {
+    display: none !important;
+  }
+
+  /* Disable blob animations and reduce blur for performance */
+  .hero-blobs > div {
+    animation: none !important;
+    filter: blur(28px) !important;
+    opacity: 0.6 !important;
+  }
+
+  /* Reduce backdrop-blur on glassmorphism elements */
+  .backdrop-blur-\[22px\] {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
+
+/* ── Respect system reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero-blobs > div {
+    animation: none !important;
+  }
+  .ticker-track {
+    animation: none !important;
+  }
+  .cd-flip,
+  .count-flip {
+    animation: none !important;
   }
 }
