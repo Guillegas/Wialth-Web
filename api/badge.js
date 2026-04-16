@@ -16,7 +16,7 @@ import { createElement as h } from 'react'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // Star as SVG data URI — Work Sans doesn't include ★ glyph
-const STAR_SVG = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="%23E1A594"/></svg>')}`
+const STAR_SVG = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#E1A594"/></svg>')}`
 
 // Load fonts at module level (cached per serverless instance)
 const fontWS800 = readFileSync(join(__dirname, 'fonts', 'WorkSans-ExtraBold.woff'))
