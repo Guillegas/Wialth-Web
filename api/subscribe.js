@@ -174,6 +174,24 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Check if contact already exists
+    const existsRes = await fetch(
+      `https://api.brevo.com/v3/contacts/${encodeURIComponent(cleanEmail)}`,
+      { headers: { 'api-key': BREVO_API_KEY } }
+    )
+    if (existsRes.ok) {
+      return res.status(200).json({ message: 'Ya estás en la lista. ¡Gracias!' })
+    }
+
+    // Get current contact count in list → assign next EA number
+    const countRes  = await fetch(
+      `https://api.brevo.com/v3/contacts?listId=${LIST_ID}&limit=1`,
+      { headers: { 'api-key': BREVO_API_KEY } }
+    )
+    const countData = await countRes.json().catch(() => ({}))
+    const eaNumber  = (countData.count ?? 0) + 1
+
+    // Create contact with EA_NUMBER attribute
     const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
       method:  'POST',
       headers: {
@@ -183,7 +201,8 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         email:         cleanEmail,
         listIds:       [LIST_ID],
-        updateEnabled: true,
+        updateEnabled: false,
+        attributes:    { EA_NUMBER: eaNumber },
       }),
     })
 
