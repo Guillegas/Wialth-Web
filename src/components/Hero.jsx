@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import PhoneMockup     from './PhoneMockup.jsx'
+import PhoneMockup from './PhoneMockup.jsx'
 import PhoneMockupChat from './PhoneMockupChat.jsx'
 import { useCountdown } from '../hooks/useCountdown.js'
 
@@ -7,7 +7,7 @@ function pad(n) { return String(n).padStart(2, '0') }
 
 function CountdownUnit({ value, label, id, variant = 'cream' }) {
   const prevRef = useRef(null)
-  const elRef   = useRef(null)
+  const elRef = useRef(null)
 
   useEffect(() => {
     const str = id === 'cd-d' ? String(value) : pad(value)
@@ -27,7 +27,7 @@ function CountdownUnit({ value, label, id, variant = 'cream' }) {
     <div className="flex flex-col items-center bg-cream/[.07] border border-cream/[.15] rounded-[10px]
                     py-[7px] px-[10px] min-w-[46px] backdrop-blur-sm">
       <span ref={elRef} id={id}
-            className={`font-h1 font-bold text-[1rem] tracking-[-0.02em] leading-none tabular-nums
+        className={`font-h1 font-bold text-[1rem] tracking-[-0.02em] leading-none tabular-nums
                         ${isGreen ? 'text-sage-dk' : 'text-cream'}`}>
         {str}
       </span>
@@ -40,12 +40,12 @@ function CountdownUnit({ value, label, id, variant = 'cream' }) {
 }
 
 export default function Hero({ heroRef, subscribed, onSuccess }) {
-  const [email, setEmail]     = useState('')
+  const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError]     = useState('')
-  const [ready, setReady]     = useState(false)
+  const [error, setError] = useState('')
+  const [ready, setReady] = useState(false)
   const [cooldown, setCooldown] = useState(false)
-  const { days, hours, minutes, seconds } = useCountdown('2026-10-01T00:00:00')
+  const { days, hours, minutes, seconds } = useCountdown('2026-09-01T00:00:00')
 
   /* Trigger hero reveals immediately on mount */
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
     }
     setLoading(true); setError('')
     try {
-      const res  = await fetch('/api/subscribe', {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: trimmed, website: '' }),
@@ -121,11 +121,11 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
       <svg aria-hidden="true" className="grain-overlay absolute inset-0 w-full h-full opacity-[.04] pointer-events-none z-0">
         <defs>
           <filter id="grain">
-            <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" stitchTiles="stitch" result="n"/>
-            <feColorMatrix type="saturate" values="0" in="n"/>
+            <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" stitchTiles="stitch" result="n" />
+            <feColorMatrix type="saturate" values="0" in="n" />
           </filter>
         </defs>
-        <rect width="100%" height="100%" filter="url(#grain)" fill="white"/>
+        <rect width="100%" height="100%" filter="url(#grain)" fill="white" />
       </svg>
 
       {/* ── Main layout ── */}
@@ -145,7 +145,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
 
           {/* Headline */}
           <h1 aria-label="Tu asistente. Tu Plan. Tu Ritmo."
-              className="font-h1 font-bold tracking-[-0.03em] leading-[1] mb-7">
+            className="font-h1 font-bold tracking-[-0.03em] leading-[1] mb-7">
 
             {/* Line 1 — pequeña, label tono */}
             <span className={`${r('d2')} block font-body font-light text-[clamp(.78rem,2vw,1rem)]
@@ -155,21 +155,21 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
 
             {/* Lines 2-4 — las tres frases, tamaño grande, cada una con su acento */}
             <span className={`${r('d3')} block text-[clamp(2.6rem,9.5vw,5.8rem)] text-cream leading-[.92]`}
-                  style={{ textShadow: '0 0 80px rgba(145,160,141,.22)' }}>
+              style={{ textShadow: '0 0 80px rgba(145,160,141,.22)' }}>
               Tu asistente.
             </span>
 
             <span className={`${r('d4')} block text-[clamp(2.6rem,9.5vw,5.8rem)] leading-[.92]`}
-                  style={{
-                    WebkitTextStroke: '1.5px rgba(233,228,212,.55)',
-                    color: 'transparent',
-                    textShadow: 'none',
-                  }}>
+              style={{
+                WebkitTextStroke: '1.5px rgba(233,228,212,.55)',
+                color: 'transparent',
+                textShadow: 'none',
+              }}>
               Tu Plan.
             </span>
 
             <span className={`${r('d4')} block text-[clamp(2.6rem,9.5vw,5.8rem)] text-salmon leading-[.92]`}
-                  style={{ textShadow: '0 0 56px rgba(225,165,148,.30)' }}>
+              style={{ textShadow: '0 0 56px rgba(225,165,148,.30)' }}>
               Tu Ritmo.
             </span>
           </h1>
@@ -177,7 +177,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
           {/* Sub-copy */}
           <p className={`${r('d4')} font-body font-light text-[clamp(.92rem,2.6vw,1.06rem)]
                           text-cream max-w-[36ch] leading-[1.74] mb-8`}
-             style={{ textShadow: '0 1px 4px rgba(61,82,57,.4)' }}>
+            style={{ textShadow: '0 1px 4px rgba(61,82,57,.4)' }}>
             Ahorra más, gasta mejor y alcanza tus metas con IA que realmente entiende tu dinero.
           </p>
 
@@ -188,8 +188,8 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
               <div className="flex flex-col items-center text-center py-4 gap-3">
                 <div className="w-14 h-14 rounded-full bg-sage/20 border border-sage/30 flex items-center justify-center">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E9E4D4"
-                       strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"/>
+                    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
                 <p className="font-h2 font-semibold text-cream text-[1rem]">¡Ya eres Early Adopter!</p>
@@ -199,11 +199,11 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
               </div>
             ) : (
               <form id="hero-form" onSubmit={handleSubmit} noValidate
-                    aria-label="Formulario lista de espera"
-                    className="flex flex-col gap-2.5">
+                aria-label="Formulario lista de espera"
+                className="flex flex-col gap-2.5">
                 {/* Honeypot — hidden from humans, bots fill it */}
                 <input type="text" name="website" tabIndex="-1" autoComplete="off"
-                       aria-hidden="true" style={{ display: 'none' }} />
+                  aria-hidden="true" style={{ display: 'none' }} />
                 <div className="inp-wrap flex-1">
                   <input
                     type="email"
@@ -235,7 +235,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
                 >
                   <span className="relative z-[1]">{loading ? 'Uniéndome…' : 'Unirme como Early Adopter →'}</span>
                   <span aria-hidden="true"
-                        className="absolute inset-0 bg-gradient-to-br from-white/[.16] to-transparent pointer-events-none" />
+                    className="absolute inset-0 bg-gradient-to-br from-white/[.16] to-transparent pointer-events-none" />
                 </button>
               </form>
             )}
@@ -243,10 +243,10 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
             {!subscribed && (
               <div className="flex items-center gap-2 mt-2.5 px-1">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
-                     className="text-cream/45 flex-shrink-0" aria-hidden="true">
-                  <rect x="3" y="11" width="18" height="11" rx="2"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+                  className="text-cream/45 flex-shrink-0" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
                 <span className="font-body font-light text-[.72rem] text-cream/50">
                   Sin spam · Sin tarjeta · Cancela cuando quieras
@@ -269,38 +269,38 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
           {/* Countdown */}
           {/* Countdown — desktop: verde */}
           <div className={`${r('d6')} hidden lg:flex flex-wrap items-center gap-3`}
-               aria-label="Cuenta atrás al lanzamiento">
+            aria-label="Cuenta atrás al lanzamiento">
             <span className="font-body font-light text-[.72rem] tracking-[.1em] uppercase text-sage-dk whitespace-nowrap">
               Lanzamiento en
             </span>
             <div className="flex items-center gap-1.5 sm:gap-2" role="timer" aria-live="off">
-              <CountdownUnit value={days}    label="días"  id="cd-d-lg" variant="green" />
+              <CountdownUnit value={days} label="días" id="cd-d-lg" variant="green" />
               <span className="font-h1 font-bold text-[.9rem] text-sage-dk/70" aria-hidden="true">:</span>
-              <CountdownUnit value={hours}   label="horas" id="cd-h-lg" variant="green" />
+              <CountdownUnit value={hours} label="horas" id="cd-h-lg" variant="green" />
               <span className="font-h1 font-bold text-[.9rem] text-sage-dk/70" aria-hidden="true">:</span>
-              <CountdownUnit value={minutes} label="min"   id="cd-m-lg" variant="green" />
+              <CountdownUnit value={minutes} label="min" id="cd-m-lg" variant="green" />
               <span className="font-h1 font-bold text-[.9rem] text-sage-dk/70" aria-hidden="true">:</span>
-              <CountdownUnit value={seconds} label="seg"   id="cd-s-lg" variant="green" />
+              <CountdownUnit value={seconds} label="seg" id="cd-s-lg" variant="green" />
             </div>
             <span className="font-body font-light text-[.72rem] tracking-[.1em] uppercase text-sage-dk/85 whitespace-nowrap">
-              1 OCT. 2026
+              1 SEPT 2026
             </span>
           </div>
 
           {/* Countdown — mobile: crema */}
           <div className={`${r('d6')} lg:hidden flex flex-wrap items-center gap-3`}
-               aria-label="Cuenta atrás al lanzamiento">
+            aria-label="Cuenta atrás al lanzamiento">
             <span className="font-body font-light text-[.72rem] tracking-[.1em] uppercase text-cream whitespace-nowrap">
               Lanzamiento en
             </span>
             <div className="flex items-center gap-1.5 sm:gap-2" role="timer" aria-live="off">
-              <CountdownUnit value={days}    label="días"  id="cd-d" variant="cream" />
+              <CountdownUnit value={days} label="días" id="cd-d" variant="cream" />
               <span className="font-h1 font-bold text-[.9rem] text-cream/30" aria-hidden="true">:</span>
-              <CountdownUnit value={hours}   label="horas" id="cd-h" variant="cream" />
+              <CountdownUnit value={hours} label="horas" id="cd-h" variant="cream" />
               <span className="font-h1 font-bold text-[.9rem] text-cream/30" aria-hidden="true">:</span>
-              <CountdownUnit value={minutes} label="min"   id="cd-m" variant="cream" />
+              <CountdownUnit value={minutes} label="min" id="cd-m" variant="cream" />
               <span className="font-h1 font-bold text-[.9rem] text-cream/30" aria-hidden="true">:</span>
-              <CountdownUnit value={seconds} label="seg"   id="cd-s" variant="cream" />
+              <CountdownUnit value={seconds} label="seg" id="cd-s" variant="cream" />
             </div>
             <span className="font-body font-light text-[.72rem] tracking-[.1em] uppercase text-cream/35 whitespace-nowrap">
               1 oct. 2026
@@ -314,16 +314,16 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
             </span>
             <div className="flex flex-col items-center gap-[3px]">
               <svg width="18" height="10" viewBox="0 0 18 10" fill="none"
-                   stroke="currentColor" strokeWidth="1.6"
-                   strokeLinecap="round" strokeLinejoin="round"
-                   style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0s' }}>
-                <polyline points="1 1 9 9 17 1"/>
+                stroke="currentColor" strokeWidth="1.6"
+                strokeLinecap="round" strokeLinejoin="round"
+                style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0s' }}>
+                <polyline points="1 1 9 9 17 1" />
               </svg>
               <svg width="18" height="10" viewBox="0 0 18 10" fill="none"
-                   stroke="currentColor" strokeWidth="1.6" opacity="0.5"
-                   strokeLinecap="round" strokeLinejoin="round"
-                   style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0.25s' }}>
-                <polyline points="1 1 9 9 17 1"/>
+                stroke="currentColor" strokeWidth="1.6" opacity="0.5"
+                strokeLinecap="round" strokeLinejoin="round"
+                style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0.25s' }}>
+                <polyline points="1 1 9 9 17 1" />
               </svg>
             </div>
           </div>
@@ -331,7 +331,7 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
 
         {/* ── Right column: two phone mockups (lg+) ── */}
         <div className="hidden lg:flex flex-col items-center justify-center"
-             style={{ minWidth: 340, paddingBottom: 20, marginTop: -60 }}>
+          style={{ minWidth: 340, paddingBottom: 20, marginTop: -60 }}>
 
           {/* Logo + frase encima de los móviles */}
           <div className={`${r('d3')} flex flex-col items-center gap-3 mb-8`}>
@@ -378,16 +378,16 @@ export default function Hero({ heroRef, subscribed, onSuccess }) {
         </span>
         <div className="flex flex-col items-center gap-[3px]">
           <svg width="26" height="14" viewBox="0 0 18 10" fill="none"
-               stroke="currentColor" strokeWidth="1.6"
-               strokeLinecap="round" strokeLinejoin="round"
-               style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0s' }}>
-            <polyline points="1 1 9 9 17 1"/>
+            stroke="currentColor" strokeWidth="1.6"
+            strokeLinecap="round" strokeLinejoin="round"
+            style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0s' }}>
+            <polyline points="1 1 9 9 17 1" />
           </svg>
           <svg width="26" height="14" viewBox="0 0 18 10" fill="none"
-               stroke="currentColor" strokeWidth="1.6" opacity="0.5"
-               strokeLinecap="round" strokeLinejoin="round"
-               style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0.25s' }}>
-            <polyline points="1 1 9 9 17 1"/>
+            stroke="currentColor" strokeWidth="1.6" opacity="0.5"
+            strokeLinecap="round" strokeLinejoin="round"
+            style={{ animation: 'scrollArrow 1.8s ease-in-out infinite', animationDelay: '0.25s' }}>
+            <polyline points="1 1 9 9 17 1" />
           </svg>
         </div>
       </div>
